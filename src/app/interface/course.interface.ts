@@ -6,7 +6,7 @@ export interface ICourse {
   thumbnail: string;
   description: string;
   price: number;
-  status: boolean;
+  status: "published" | "upcoming";
   isDeleted: boolean;
   user: Types.ObjectId;
 }

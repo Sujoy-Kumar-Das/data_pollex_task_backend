@@ -27,9 +27,12 @@ const courseSchema = new Schema<ICourse>(
       min: [0, "Course price must be greater than or equal to 0."],
     },
     status: {
-      type: Boolean,
-      required: [true, "Course status is required."],
-      default: true,
+      type: String,
+      enum: {
+        values: ["published", "upcoming"],
+        message: "Status must be either 'published' or 'upcoming'.",
+      },
+      default: "published",
     },
     isDeleted: {
       type: Boolean,
