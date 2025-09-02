@@ -50,16 +50,29 @@ const userSchema = new Schema<IUser, IUserMethods>(
   },
   {
     timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.password;
+        delete ret.isBlocked;
+        delete ret.isDeleted;
+        return ret;
+      },
+    },
   }
 );
 
 // is user exists statics
-userSchema.statics.isUserExists = function (email: string) {
+userSchema.statics.findUserByEmail = function (email: string) {
   return User.findOne({ email }).select("+isBlocked +isDeleted");
 };
 
+// is user by id statics
+userSchema.statics.findUserById = function (id: string) {
+  return User.findById(id).select("+isBlocked +isDeleted");
+};
+
 // user method for compare passwords
-userSchema.methods.passwordMatched = async function (
+userSchema.statics.passwordMatched = async function (
   plainPassword: string,
   hashedPassword: string
 ): Promise<boolean> {

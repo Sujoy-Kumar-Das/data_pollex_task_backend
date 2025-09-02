@@ -4,7 +4,7 @@ import sendResponse from "../utils/sendResponse";
 import { setCookie } from "../utils/setCookie";
 
 const login = catchAsync(async (req, res) => {
-  const { accessToken, refreshToken } = await authService.login(req.body);
+  const { accessToken, refreshToken, user } = await authService.login(req.body);
 
   setCookie({ res, name: "accessToken", value: accessToken });
   setCookie({ res, name: "refreshToken", value: refreshToken });
@@ -13,7 +13,7 @@ const login = catchAsync(async (req, res) => {
     success: true,
     message: "Login successful",
     statusCode: 200,
-    data: null,
+    data: user,
   });
 });
 

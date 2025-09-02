@@ -1,3 +1,4 @@
+import { USER_ROLE } from "../constants/user.constant";
 import AppError from "../errors/AppError";
 import { IUser } from "../interface/user.interface";
 import { User } from "../model/user.model";
@@ -10,13 +11,18 @@ const createStudent = async (payload: IUser) => {
     throw new AppError(409, `${existsUser.name} already have an account.`);
   }
 
-  const result = await User.create({ name, email, password, role: "student" });
+  const result = await User.create({
+    name,
+    email,
+    password,
+    role: USER_ROLE.student,
+  });
 
   if (!result._id) {
     throw new AppError(400, "Failed to create user");
   }
 
-  return existsUser;
+  return result;
 };
 
 const userService = {

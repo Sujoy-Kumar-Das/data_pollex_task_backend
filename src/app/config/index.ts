@@ -12,4 +12,6 @@ export default {
   refresh_token_secret: process.env.refresh_token_secret,
   access_token_validation: process.env.access_token_validation,
   refresh_token_validation: process.env.refresh_token_validation,
+  admin_email: process.env.admin_email,
+  admin_password: process.env.admin_password,
 };

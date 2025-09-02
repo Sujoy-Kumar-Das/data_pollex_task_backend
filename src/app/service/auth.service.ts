@@ -24,8 +24,10 @@ const login = async (payload: { email: string; password: string }) => {
   //   check is the password matched
   const isPasswordMatched = await User.passwordMatched(
     password,
-    findUser.password
+    findUser.password as string
   );
+
+  console.log({ isPasswordMatched });
 
   if (!isPasswordMatched) {
     throw new AppError(403, "Wrong password.");
@@ -43,6 +45,10 @@ const login = async (payload: { email: string; password: string }) => {
   return {
     accessToken,
     refreshToken,
+    user: {
+      name: findUser.name,
+      email: findUser.email,
+    },
   };
 };
 
