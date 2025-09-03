@@ -1,6 +1,7 @@
 import AppError from "../errors/AppError";
 import { ICourse } from "../interface/course.interface";
 import { Course } from "../model/course.model";
+import { CourseEnrollment } from "../model/enrollment.model";
 import { Lecture } from "../model/lecture.model";
 import { Module } from "../model/module.model";
 
@@ -46,10 +47,39 @@ const getSingle = async (id: string) => {
   return { ...course, modules: modulesWithLectures };
 };
 
+const enroll = async (courseId: string, userId: string) => {
+  const findCourse = await Course.findById(courseId);
+
+  if (!findCourse || findCourse.isDeleted) {
+    throw new AppError(404, "Course not found.");
+  }
+
+  const alreadyEnrolled = await CourseEnrollment.findOne({
+    user: userId,
+    course: courseId,
+  });
+
+  if (alreadyEnrolled) {
+    throw new AppError(409, "You have been already enrolled this course.");
+  }
+
+  const enrollCourse = await CourseEnrollment.create({
+    user: userId,
+    course: courseId,
+  });
+
+  if (!enrollCourse._id) {
+    throw new AppError(409, "Failed to Enroll course.");
+  }
+
+  return enrollCourse;
+};
+
 const courseService = {
   create,
   getAll,
   getSingle,
+  enroll,
 };
 
 export default courseService;

@@ -35,10 +35,22 @@ const getSingle = catchAsync(async (req, res) => {
   });
 });
 
+const enroll = catchAsync(async (req, res) => {
+  const result = await courseService.enroll(req.params.courseId, req.user.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Course enrolled fetched successfully",
+    data: result,
+  });
+});
+
 const courseController = {
   create,
   getAll,
   getSingle,
+  enroll,
 };
 
 export default courseController;

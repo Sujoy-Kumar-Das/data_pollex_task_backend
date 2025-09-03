@@ -17,6 +17,12 @@ router.post(
 router.get("/", courseController.getAll);
 router.get("/:courseId", courseController.getSingle);
 
+router.post(
+  "/:courseId/enroll",
+  auth(USER_ROLE.student),
+  courseController.enroll
+);
+
 const courseRouter = router;
 
 export default courseRouter;
