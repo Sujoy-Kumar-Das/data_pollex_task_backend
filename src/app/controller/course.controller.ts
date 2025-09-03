@@ -13,8 +13,32 @@ const create = catchAsync(async (req, res) => {
   });
 });
 
+const getAll = catchAsync(async (req, res) => {
+  const result = await courseService.getAll();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Course fetched successfully",
+    data: result,
+  });
+});
+
+const getSingle = catchAsync(async (req, res) => {
+  const result = await courseService.getSingle(req.params.courseId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Course details fetched successfully",
+    data: result,
+  });
+});
+
 const courseController = {
   create,
+  getAll,
+  getSingle,
 };
 
 export default courseController;

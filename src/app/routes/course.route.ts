@@ -14,6 +14,9 @@ router.post(
   courseController.create
 );
 
+router.get("/", courseController.getAll);
+router.get("/:courseId", courseController.getSingle);
+
 const courseRouter = router;
 
 export default courseRouter;

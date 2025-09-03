@@ -14,7 +14,10 @@ const create = async (payload: ILecture[]) => {
     const moduleId = payload[0].module;
 
     const findModule = await Module.findById(moduleId).session(session);
-    if (!findModule) throw new AppError(404, "Module is not found");
+
+    if (!findModule) {
+      throw new AppError(404, "Module is not found");
+    }
 
     // Get the last lecture number
     const lastLecture = await Lecture.findOne({ module: moduleId })

@@ -38,11 +38,6 @@ const courseSchema = new Schema<ICourse>(
       type: Boolean,
       default: false,
     },
-    user: {
-      type: Schema.Types.ObjectId,
-      required: [true, "Course author is required."],
-      ref: "User",
-    },
   },
   {
     timestamps: true,

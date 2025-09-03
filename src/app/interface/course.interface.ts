@@ -8,5 +8,4 @@ export interface ICourse {
   price: number;
   status: "published" | "upcoming";
   isDeleted: boolean;
-  user: Types.ObjectId;
 }
